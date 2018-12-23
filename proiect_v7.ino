@@ -20,25 +20,25 @@ Servo servo;
 LiquidCrystal lcd( RS, E, D4, D5, D6, D7 );
 
 int jocNeterminat = 0;
-int valPot1, valVechePot1;
-int valPot2, valVechePot2;
 int jocInDesfasurare = 0;
 int nrJucatori = 0;
 int jocPierdut = 0;
-int punct;
-long long int timp, asteptare;
-int predRand = 3;
-int randNum = 8;
-int vieti;
 int nrSetariPotentiometru = 0;
 int nrJoc = 0;
-int punct1, punct2;
-int goaleRamase = 0;
-int randVechi = 5;
+int punct; //retine pozitia jucatorului pe matrice, in varianta de un player
+long long int timp, asteptare;
+int valPot1, valVechePot1; //valorile citite de la potentiometrul 1
+int valPot2, valVechePot2; //valorile citite de la potentiometrul 2
 double scor;
 double highscore = 0;
-int stinge = 0;
-int setJocuri = 0;
+int predRand = 3; //pentru generarea hartii in varianta de un player
+int randNum = 8; //pentru generarea hartii in varianta de un player
+int vieti;
+int punct1, punct2; //retine pozitia jucatorilor pe matrice, in varianta de doi playeri
+int goaleRamase = 0; //numarul de randuri care trebuie lasate goale, pana cand vor aparea obstacole (varianta de doi playeri)
+int randVechi = 5;
+int stinge = 0; //folosit pentru palpaitul punctelor
+int setJocuri = 0; //folosit pentru generarea setului de 5 jocuri in varianta de doi playeri
 bool harta1p[8][8] =
 {
   {0, 0, 0, 0, 0, 1, 1, 1},
@@ -303,7 +303,7 @@ void stanga() { //folosita pentru setarile initiale ale potentiometrului (poziti
   }
 }
 
-void bifat() {
+void bifat() { //afiseaza informatii pentru setarea initiala potentiometrului
   lc.clearDisplay(0);
   scrieMatrice(bifa, 300); //afisez o matrice timp de 300 ms, nu e in "interiorul" jocului
   lc.clearDisplay(0);
@@ -420,7 +420,7 @@ void jocSinglePlayer() {
       coboaraHarta1p();
       scor++;
 
-      if (scor > 0) {
+      if (scor > 0) { //afiseaza pe lcd informatii despre jocul curent
         lcd.clear();
         lcd.setCursor(0, 0);
         lcd.print("scor: ");
@@ -434,7 +434,7 @@ void jocSinglePlayer() {
 
       }
 
-      scrieMatrice(harta1p);
+      scrieMatrice(harta1p); //scrie matricea actualizata de coboaraHarta1p()
 
       if (stinge > 0) {
         lc.clearDisplay(0);
@@ -515,7 +515,7 @@ int informatiiJocPierdut1p() { //afiseaza informatii la finalul jocului de un pl
   delay(1000); //timpul de asteptare pana la primirea input-ului, nu influenteaza jocul 
   valVechePot1 = analogRead(POT1);
 
-  while (1) { //aici se schimba textul afisat pe lcd, la interval de 2 secunde
+  while (1) { //aici se schimba textul afisat pe lcd, la interval de 2 secunde. se iese din while atunci cand e primit input de la utilizator
     if (schimbaText == 0)
       if (millis() > timp + 2000) {
         if (highscore <= scor) {//infomarii despre scor
@@ -574,7 +574,7 @@ void seteazaPotentiometre2p() { //pozitionarea potentiometrului secundar, initia
   }
 }
 
-void bifat2p() {
+void bifat2p() { //afiseaza informatii despre pozitionarea potentiometrului secundar
   for (int col = 0; col < 4; col++)
     for (int rnd = 0; rnd < 4; rnd++) {
       lc.setLed(0, 7 - col, rnd + 2, bifatMic[rnd][col]);
@@ -648,8 +648,8 @@ void jocMultiPlayer() {
   lcd.print("potentiometrul 2");
   seteazaPotentiometre2p();
   lcd.clear();
-  castigator(-1, 0, 0);
-  treiDoiUnuMic();
+  castigator(-1, 0, 0); // sunt afisate pe lcd informatiile initiale (fiecare jucator are scorul 0 si nu exista castigator) 
+  treiDoiUnuMic(); //numaratoarea inversa
 
   for (setJocuri = 0; setJocuri < 5; setJocuri++) { //se joaca un set de 5 jocuri care se finalizeaza prin castigarea de catre un jucator (nu sunt luate in calcul remizele)
                                                     //la finalul acestui set, castigatorul final va fi acel jucator care are cel mai mic numar de jocuri pierdute
@@ -666,8 +666,8 @@ void jocMultiPlayer() {
     jocNeterminat = 0;
 
     while (jocNeterminat == 0) {
-      clipeste(timpStingereP1, stinsP1, punct1, 7);
-      clipeste(timpStingereP2, stinsP2, punct2, 0);
+      clipeste(timpStingereP1, stinsP1, punct1, 7); //palpaitul punctului
+      clipeste(timpStingereP2, stinsP2, punct2, 0); //palpaitul punctului
       miscare2p();
 
       if (harta2p[7][7 - punct1] == 1 && harta2p[0][7 - punct2] == 1) { //cazul "remiza"
@@ -709,7 +709,7 @@ void jocMultiPlayer() {
 }
 
 void afiseazaCastigator(int jucator, int jocuriCastigateP1, int jocuriCastigateP2) {
-  for (int nr = 0; nr < 5; nr++) { //se ocupa de palpaitul led-urilor la finalul setului de 3 jocuri
+  for (int nr = 0; nr < 5; nr++) { //se ocupa de palpaitul fetelor (cea fericita si cea trista) la finalul setului de 5 jocuri
     for (int rnd = 0; rnd < 8; rnd++)
       for (int col = 0; col < 8; col++)
         if (jucator == 1)
@@ -737,7 +737,7 @@ void afiseazaCastigator(int jucator, int jocuriCastigateP1, int jocuriCastigateP
   nrJoc++;
   nrJucatori = 0;
 
-  while (1) {//schimba texul de pe lcd, la interval de 2 secunde
+  while (1) {//schimba texul de pe lcd, la interval de 2 secunde; se iese din while atunci cand e primit input de la jucator
     if (schimbareText == 0) //afiseaza castigatorii
       if (millis() > timp + 2000) {
         castigator(-1, jocuriCastigateP1, jocuriCastigateP2); 
@@ -853,6 +853,7 @@ void coboara2p() { //genenereaza random obstacolele, pentru modul de doi jucator
 
 void miscare2p() { //gestioneaza miscarea celor doi jucatori pe harta, in modul de 2 playeri
                    //la fel ca in cazul unui singur jucator, miscarea se realizeaza la modificarea cu 70 de unitati a valorilor primite de la potentiometre 
+  
   //gestionare potentiometru 1
   valPot1 = analogRead(POT1);
 
