@@ -1,8 +1,8 @@
 # Ardrumino
 ### Componente necesare
 Breadboard mediu x2; Breadboard mic; Potentiometru x2; Lcd; Matrice led-uri 8x8; Servo; Fire mama-tata x9; Multe fire tata-tata; Rezistenta 220; Rezistenta 10k; Arduino uno; Modul MAX7219; Condensator 10uF; Condensator 0.1uF
-![picture]()
-// poza cu schema
+![picture](ardrumino_bb.jpg)
+
 ### Despre joc
 Ardrumino este un joc tip arcade, care poate fi jucat de una sau doua persoane. 
 Odata conectat la o sursa electrica, trebuie setat potentiometrul principal (POT1 in poza) la o valoare de mijloc,cu ajutorul indicatiilor vizualizate pe lcd si a sagetilor de pe matricea de led uri. Apoi, jucatorul va selecta modul de joc (single player sau multiplayer) 
