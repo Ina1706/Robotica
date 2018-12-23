@@ -11,9 +11,7 @@ Odata conectat la o sursa electrica, trebuie setat potentiometrul principal (POT
 ### Modul de un jucator
 Filmulet demonstrativ: https://drive.google.com/open?id=1hR8wtvw8donYwkLuwgBK7vzdQ5x46ktT
 
-In acest mod, jucatorul (care realizează mișcările cu ajutorul potentiometrului principal), reprezentat pe matrice ca un punct care palpaie, trebuie sa evite led-urile aprinse de pe matrice (acestea iau forma unui drum). In timpul jocului, sunt afisate pe lcd informatii precum scorul curent, highscore-ul si numarul de vieti ramase in joc. La contactul cu unul din led urile aprinse, jucatorul pierde o viata, iar obstacolele dispar, urmand sa fie generate din nou dupa 1-2 secunde. Odata epuizate cele 3 vieti, vor fi afisate urmatoarele, in functie de caz:
--o fata trista, daca highscore ul nu a fost depasit
--o fata fericita, in caz contrar
+In acest mod, jucatorul (care realizează mișcările cu ajutorul potentiometrului principal), reprezentat pe matrice ca un punct care palpaie, trebuie sa evite led-urile aprinse de pe matrice (acestea iau forma unui drum). In timpul jocului, sunt afisate pe lcd informatii precum scorul curent, highscore-ul si numarul de vieti ramase in joc. La contactul cu unul din led urile aprinse, jucatorul pierde o viata, iar obstacolele dispar, urmand sa fie generate din nou dupa 1-2 secunde. Odata epuizate cele 3 vieti, vor fi afisate urmatoarele, in functie de caz: o fata trista, daca highscore ul nu a fost depasit, si o fata fericita, in caz contrar.
 Informatiile despre jocul pierdut vor ramane afisate pe matrice si lcd pana la interactiunea utilizatorului (pana cand potentiometrul principal este miscat). Atunci, se revine la meniul cu alegerea numarului de jucatori. 
 ![picture](un_jucator.jpg)
 
