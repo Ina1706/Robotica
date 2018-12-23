@@ -902,7 +902,7 @@ void coboaraServo() { //modifica pozitia elicei si apoi opreste alimentarea serv
   servo.attach(SERVO_PIN);
   servo.write(125);
   delay(1000); //e folosit pentru a asteapta terminarea miscarii servo-ului
-  servo.detach();
+  servo.detach(); //ii opresc alimentarea, pentru a se opri din vibrat (altfel, apar probleme la potentiometre)
 }
 
 void treiDoiUnu() { //numaratoarea inversa, initiala jocului in modul de 2 playeri
@@ -916,7 +916,7 @@ void ridicaServo() { //modifica pozitia elicei si apoi opreste alimentarea servo
   servo.attach(SERVO_PIN);
   servo.write(0);
   delay(1000); //e folosit pentru a asteapta terminarea miscarii servo-ului
-  servo.detach();
+  servo.detach(); //ii opresc alimentarea, pentru a se opri din vibrat (altfel, apar probleme la potentiometre)
 }
 
 void setup() {
